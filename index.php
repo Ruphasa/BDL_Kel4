@@ -1,3 +1,6 @@
+<?php
+include ('lib/connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 

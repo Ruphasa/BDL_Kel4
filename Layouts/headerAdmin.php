@@ -13,7 +13,7 @@
                         <a class="nav-link text-body small" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-body small" href="../" data-toggle="modal" data-target="#">Logout</a>
+                        <a class="nav-link text-body small" href="#" data-toggle="modal" data-target="#loginModal">Logout</a>
                     </li>
                 </ul>
             </nav>

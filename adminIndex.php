@@ -1,3 +1,6 @@
+<?php
+include ('lib/connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,12 +30,12 @@
 
 <body>
     <!-- Topbar Start -->
-    <?php include 'Layouts/header.php'; ?>
+    <?php include 'Layouts/headerAdmin.php'; ?>
     <!-- Navbar End -->
 
 <!-- content start -->
     <?php 
-    if (isset($_GET['pages']) && $_GET['pages'] == 'dashboard') {
+    if (isset($_GET['pages']) && $_GET['pages'] == 'single') {
         # code...
         include 'pages/single.php';
     }else if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') {
