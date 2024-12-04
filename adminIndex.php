@@ -1,6 +1,6 @@
 <?php
 include "lib/crud.php"
-?>
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,28 +48,33 @@ include "lib/crud.php"
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>No.</th>
                                     <th>Judul</th>
-                                    <th>Konten</th>
                                     <th>Ringkasan</th>
+                                    <th>Dibuat</th>
+                                    <th>Diperbarui</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody> <?php 
+                            <tbody> <?php
+                            $count = 1;
                             foreach ($allData as $data) { ?>
                                     <tr>
-                                        <td><?php echo $data['_id']; ?></td>
+                                        <td><?php echo $count; ?></td>
                                         <td><?php echo $data['Judul']; ?></td>
-                                        <td><?php echo $data['Konten']; ?></td>
                                         <td><?php echo $data['Ringkasan']; ?></td>
+                                        <td><?php echo $data['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
+                                        <td><?php echo $data['Diperbarui']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
                                         <td> <button type="button" class="btn btn-warning btn-sm"
-                                                onclick="populateUpdateForm('<?php echo $data['_id']; ?>', '<?php echo $data['column1']; ?>', '<?php echo $data['column2']; ?>', '<?php echo $data['column3']; ?>')"
-                                                data-toggle="modal" data-target="#updateModal">Edit</button>
+                                                data-id="<?php echo $data['_id']; ?>" data-toggle="modal"
+                                                data-target="#updateModal">Edit</button>
                                             <form method="post" style="display:inline-block;"> <input type="hidden"
                                                     name="id" value="<?php echo $data['_id']; ?>"> <button type="submit"
                                                     name="delete" class="btn btn-danger btn-sm">Delete</button> </form>
                                         </td>
-                                    </tr> <?php } ?>
+                                    </tr> <?php $count++;
+                            }
+                            $count = 1; ?>
                             </tbody>
                         </table>
                     </div>
@@ -88,18 +93,28 @@ include "lib/crud.php"
                 </div>
                 <div class="modal-body">
                     <form method="post">
-                        <div class="form-group"> <label for="column1">Column 1</label> <input type="text"
-                                class="form-control" id="column1" name="column1" required> </div>
-                        <div class="form-group"> <label for="column2">Column 2</label> <input type="text"
-                                class="form-control" id="column2" name="column2" required> </div>
-                        <div class="form-group"> <label for="column3">Column 3</label> <input type="text"
-                                class="form-control" id="column3" name="column3" required> </div> <button type="submit"
-                            name="create" class="btn btn-primary">Add New Data</button>
+                        <div class="form-group"> <label for="Judul">Judul</label> <input type="text"
+                                class="form-control" id="Judul" name="Judul" required> </div>
+                        <div class="form-group"> <label for="Ringkasan">Ringkasan</label> <input type="text"
+                                class="form-control" id="Ringkasan" name="Ringkasan" required> </div>
+                        <div class="form-group"> <label for="Konten">Konten</label> <textarea class="form-control"
+                                id="Konten" name="Konten" required></textarea> </div>
+                        <div class="form-group"> <label for="Penulis">Penulis</label> <input type="text"
+                                class="form-control" id="Penulis" name="Penulis" required> </div>
+                        <div class="form-group"> <label for="Kategori">Kategori</label> <input type="text"
+                                class="form-control" id="Kategori" name="Kategori" required> </div>
+                        <div class="form-group"> <label for="Dibuat">Dibuat</label> <input type="time"
+                                class="form-control" id="Dibuat" name="Dibuat" required> </div>
+                        <div class="form-group"> <label for="Diperbarui">Diperbarui</label> <input type="time"
+                                class="form-control" id="Diperbarui" name="Diperbarui" required> </div>
+                        <button type="submit" name="create" class="btn btn-primary">Add New Data</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div> <!-- Create Modal End --> <!-- Update Modal Start -->
+    </div> <!-- Create Modal End -->
+
+    <!-- Update Modal Start -->
     <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -110,24 +125,33 @@ include "lib/crud.php"
                 </div>
                 <div class="modal-body">
                     <form method="post" id="updateForm"> <input type="hidden" id="updateId" name="id">
-                        <div class="form-group"> <label for="updateColumn1">Column 1</label> <input type="text"
-                                class="form-control" id="updateColumn1" name="column1" required> </div>
-                        <div class="form-group"> <label for="updateColumn2">Column 2</label> <input type="text"
-                                class="form-control" id="updateColumn2" name="column2" required> </div>
-                        <div class="form-group"> <label for="updateColumn3">Column 3</label> <input type="text"
-                                class="form-control" id="updateColumn3" name="column3" required> </div> <button
-                            type="submit" name="update" class="btn btn-primary">Update Data</button>
+                        <div class="form-group"> <label for="updateJudul">Judul</label> <input type="text"
+                                class="form-control" id="updateJudul" name="Judul" required><?php $data['Judul'] ?>
+                        </div>
+                        <div class="form-group"> <label for="updateRingkasan">Ringkasan</label> <input type="text"
+                                class="form-control" id="updateRingkasan" name="Ringkasan"
+                                required><?php $data['Ringkasan'] ?> </div>
+                        <div class="form-group"> <label for="updateKonten">Konten</label> <textarea class="form-control"
+                                id="updateKonten" name="Konten" required> <?php $data['Konten'] ?></textarea> </div>
+                        <div class="form-group"> <label for="updatePenulis">Penulis</label> <input type="text"
+                                class="form-control" id="updatePenulis" name="Penulis"
+                                required><?php $data['Penulis'] ?> </div>
+                        <div class="form-group"> <label for="updateKategori">Kategori</label> <input type="text"
+                                class="form-control" id="updateKategori" name="Kategori" required>
+                            <?php $data['Kategori'] ?></div>
+                        <div class="form-group"> <label for="updateDibuat">Dibuat</label> <input type="time"
+                                class="form-control" id="updateDibuat" name="Dibuat" required> <?php $data['Dibuat']->toDateTime()->format('Y-m-d H:i:s')?>
+                        </div>
+                        <div class="form-group"> <label for="updateDiperbarui">Diperbarui</label> <input type="time"
+                                class="form-control" id="updateDiperbarui" name="Diperbarui"
+                                required><?php $data['Diperbarui']->toDateTime()->format('Y-m-d H:i:s')?> </div>
+                        <button type="submit" name="update" class="btn btn-primary">Update Data</button>
                     </form>
                 </div>
             </div>
         </div>
     </div> <!-- Update Modal End -->
-    </div>
-    </div>
-    </div>
-    </div>
-    </div> <!-- Data Table End -->
-    <!-- Contact End -->
+
 
     <!-- Footer Start -->
     <?php include 'Layouts/footer.php'; ?>

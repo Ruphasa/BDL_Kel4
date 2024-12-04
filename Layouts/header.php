@@ -13,7 +13,8 @@
                         <a class="nav-link text-body small" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-body small" href="#" data-toggle="modal" data-target="#loginModal">Login</a>
+                        <a class="nav-link text-body small" href="#" data-toggle="modal"
+                            data-target="#loginModal">Login</a>
                     </li>
                 </ul>
             </nav>
@@ -70,29 +71,15 @@
         <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
             <div class="navbar-nav mr-auto py-0">
                 <?php if (isset($_GET['pages']) && $_GET['pages'] == 'home') { ?>
-                <a href="index.php?pages=home" class="nav-item nav-link active">Home</a>
-                <?php }else{ ?>
-                <a href="index.php?pages=home" class="nav-item nav-link">Home</a>
+                    <a href="index.php?pages=home" class="nav-item nav-link active">Home</a>
+                <?php } else { ?>
+                    <a href="index.php?pages=home" class="nav-item nav-link">Home</a>
                 <?php } ?>
                 <?php if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') { ?>
-                <a href="index.php?pages=discovery" class="nav-item nav-link active">Discovery</a>
-                <?php }else{ ?>
-                <a href="index.php?pages=discovery" class="nav-item nav-link">Discovery</a>
+                    <a href="index.php?pages=discovery" class="nav-item nav-link active">Discovery</a>
+                <?php } else { ?>
+                    <a href="index.php?pages=discovery" class="nav-item nav-link">Discovery</a>
                 <?php } ?>
-                <?php if (isset($_GET['pages']) && $_GET['pages'] == 'single') { ?>
-                <a href="index.php?pages=single" class="nav-item nav-link active">Single News</a>
-                <?php }else{ ?>
-                <a href="index.php?pages=single" class="nav-item nav-link">Single News</a>
-                <?php } ?>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dropdown</a>
-                    <div class="dropdown-menu rounded-0 m-0">
-                        <a href="#" class="dropdown-item">Menu item 1</a>
-                        <a href="#" class="dropdown-item">Menu item 2</a>
-                        <a href="#" class="dropdown-item">Menu item 3</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
             </div>
             <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
                 <input type="text" class="form-control border-0" placeholder="Keyword">
@@ -115,7 +102,7 @@
                     data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="adminIndex.php">
                     <div class="form-group"> <label for="username">Username</label> <input type="text"
                             class="form-control" id="username" placeholder="Enter username"> </div>
                     <div class="form-group"> <label for="password">Password</label> <input type="password"
