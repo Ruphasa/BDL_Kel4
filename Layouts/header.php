@@ -81,13 +81,14 @@
                     <a href="index.php?pages=discovery" class="nav-item nav-link">Discovery</a>
                 <?php } ?>
             </div>
-            <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
-                <input type="text" class="form-control border-0" placeholder="Keyword">
-                <div class="input-group-append">
-                    <button class="input-group-text bg-primary text-dark border-0 px-3"><i
-                            class="fa fa-search"></i></button>
-                </div>
-            </div>
+            <?php if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') {?>
+                <form method="GET" class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
+                    <input type="hidden" name="pages" value="<?= isset($_GET['pages']) ? $_GET['pages'] : 'home'; ?>">
+                    <input type="text" class="form-control border-0" name="keyword" placeholder="Keyword">
+                    <div class="input-group-append"> <button class="input-group-text bg-primary text-dark border-0 px-3"><i
+                    class="fa fa-search"></i></button> </div>
+                </form>
+                <?php }?>
         </div>
     </nav>
 </div>

@@ -66,8 +66,8 @@ include "lib/crud.php"
                                         <td><?php echo $data['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
                                         <td><?php echo $data['Diperbarui']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
                                         <td> <button type="button" class="btn btn-warning btn-sm"
-                                                data-id="<?php echo $data['_id']; ?>" data-toggle="modal"
-                                                data-target="#updateModal">Edit</button>
+                                                data-id="<?php $edit = $data ?>"
+                                                data-toggle="modal" data-target="#updateModal">Edit</button>
                                             <form method="post" style="display:inline-block;"> <input type="hidden"
                                                     name="id" value="<?php echo $data['_id']; ?>"> <button type="submit"
                                                     name="delete" class="btn btn-danger btn-sm">Delete</button> </form>
@@ -81,7 +81,9 @@ include "lib/crud.php"
                 </div>
             </div>
         </div>
-    </div> <!-- Data Table End --><!-- Form untuk Create Data -->
+    </div> <!-- Data Table End -->
+
+    <!-- Form untuk Create Data -->
     <!-- Create Modal Start -->
     <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
         aria-hidden="true">
@@ -126,25 +128,26 @@ include "lib/crud.php"
                 <div class="modal-body">
                     <form method="post" id="updateForm"> <input type="hidden" id="updateId" name="id">
                         <div class="form-group"> <label for="updateJudul">Judul</label> <input type="text"
-                                class="form-control" id="updateJudul" name="Judul" required><?php $data['Judul'] ?>
+                                class="form-control" id="updateJudul" name="Judul" required><?php $edit['Judul'] ?>
                         </div>
                         <div class="form-group"> <label for="updateRingkasan">Ringkasan</label> <input type="text"
                                 class="form-control" id="updateRingkasan" name="Ringkasan"
-                                required><?php $data['Ringkasan'] ?> </div>
+                                required><?php $edit['Ringkasan'] ?> </div>
                         <div class="form-group"> <label for="updateKonten">Konten</label> <textarea class="form-control"
-                                id="updateKonten" name="Konten" required> <?php $data['Konten'] ?></textarea> </div>
+                                id="updateKonten" name="Konten" required> <?php $edit['Konten'] ?></textarea> </div>
                         <div class="form-group"> <label for="updatePenulis">Penulis</label> <input type="text"
                                 class="form-control" id="updatePenulis" name="Penulis"
-                                required><?php $data['Penulis'] ?> </div>
+                                required><?php $edit['Penulis'] ?> </div>
                         <div class="form-group"> <label for="updateKategori">Kategori</label> <input type="text"
                                 class="form-control" id="updateKategori" name="Kategori" required>
-                            <?php $data['Kategori'] ?></div>
+                            <?php $edit['Kategori'] ?></div>
                         <div class="form-group"> <label for="updateDibuat">Dibuat</label> <input type="time"
-                                class="form-control" id="updateDibuat" name="Dibuat" required> <?php $data['Dibuat']->toDateTime()->format('Y-m-d H:i:s')?>
+                                class="form-control" id="updateDibuat" name="Dibuat" required>
+                            <?php $edit['Dibuat']->toDateTime()->format('Y-m-d H:i:s') ?>
                         </div>
                         <div class="form-group"> <label for="updateDiperbarui">Diperbarui</label> <input type="time"
                                 class="form-control" id="updateDiperbarui" name="Diperbarui"
-                                required><?php $data['Diperbarui']->toDateTime()->format('Y-m-d H:i:s')?> </div>
+                                required><?php $edit['Diperbarui']->toDateTime()->format('Y-m-d H:i:s') ?> </div>
                         <button type="submit" name="update" class="btn btn-primary">Update Data</button>
                     </form>
                 </div>

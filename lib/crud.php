@@ -23,5 +23,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Menghapus data dari koleksi 
     }
 }
-$allData = getAllData($db);
+function getAllCategories($db)
+{
+    $collection = $db->News;
+    $categories = $collection->distinct('Kategori');
+    return $categories;
+}
+
+function getNewsByCategory($db, $category)
+{
+    $collection = $db->News;
+    $collection = $collection->find(['Kategori' => $category])->toArray();
+    return $collection;
+}
+
+function searchNewsByKeyword($db, $keyword)
+{
+    $collection = $db->News;
+    $regex = new MongoDB\BSON\Regex($keyword, 'i');
+    // Pencarian case-insensitive 
+    $query = [
+        '$or' => [
+            ['Judul' => $regex],
+            ['Konten' => $regex],
+            ['Ringkasan' => $regex],
+            ['Penulis' => $regex]
+        ]
+    ];
+    return $collection->find($query)->toArray();
+}
+
+
+// Mendapatkan berita berdasarkan kategori yang dipilih 
+$categories = getAllCategories($db);
+$selectedCategory = isset($_GET['Kategori']) ? $_GET['Kategori'] : 'View All';
+$keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+
+if (!empty($keyword)) {
+    // Pencarian berdasarkan keyword 
+    $allData = searchNewsByKeyword($db, $keyword);
+} else if ($selectedCategory == 'View All') {
+    $allData = getAllData($db);
+} else {
+    $allData = getNewsByCategory($db, $selectedCategory);
+}
+
+
 ?>
