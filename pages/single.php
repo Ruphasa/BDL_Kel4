@@ -1,13 +1,13 @@
 <?php
 include 'lib/crud.php';
 $id = $_GET['id'];
-$data = $db->News->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
+$data = $db->news->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
 ?>
 <!-- Breaking News Start -->
 <div class="container-fluid mt-5 mb-3 pt-3">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-12">
+            <div class="col-12">    
                 <div class="d-flex justify-content-between">
                     <div class="section-title border-right-0 mb-0" style="width: 180px;">
                         <h4 class="m-0 text-uppercase font-weight-bold">Tranding</h4>
@@ -41,7 +41,7 @@ $data = $db->News->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                         <div class="mb-3">
                             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
                                 href=""><?php echo $data['Kategori'];?></a>
-                            <a class="text-body" href=""><?php echo $data['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></a>
+                            <a class="text-body" href=""><?php echo $data['Dibuat'] ->toDateTime()->format('Y-m-d H:i:s');?></a>
                         </div>
                         <h1 class="mb-3 text-secondary text-uppercase font-weight-bold"> <?php echo $data['Judul']; ?> </h1>
                         <p> <?php echo $data['Konten']; ?> </p>
