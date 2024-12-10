@@ -1,7 +1,7 @@
 <?php include 'lib/connection.php';
 function getAllData($db)
 {
-    $collection = $db->news;
+    $collection = $db->News;
     // Memilih koleksi news 
     return $collection->find()->toArray();
     // Mengambil semua data dalam bentuk array 
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Mengupdate data di koleksi 
     } elseif (isset($_POST['delete'])) {
         $id = $_POST['id'];
-        $db->news->deleteOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
+        $db->News->deleteOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
         // Menghapus data dari koleksi 
     }
 }
@@ -59,14 +59,14 @@ function getMessage(){
 
 function getAllCategories($db)
 {
-    $collection = $db->news;
+    $collection = $db->News;
     $categories = $collection->distinct('Kategori');
     return $categories;
 }
 
 function getNewsByCategory($db, $category)
 {
-    $collection = $db->news;
+    $collection = $db->News;
     $collection = $collection->find(['Kategori' => $category])->toArray();
     return $collection;
 }

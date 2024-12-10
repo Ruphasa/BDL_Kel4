@@ -11,7 +11,7 @@ $client = new MongoDB\Client("mongodb://$host");
 $db = $client->selectDatabase($database);
 
 // Memastikan koleksi news ada 
-$collection = $db->news; 
+$collection = $db->News; 
 if(!$collection) { 
     die("Koleksi 'news' tidak ditemukan"); 
 }
