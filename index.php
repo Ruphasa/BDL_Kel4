@@ -1,6 +1,3 @@
-<?php
-include ('lib/connection.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,37 +23,68 @@ include ('lib/connection.php');
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .footer {
+            background: #111111;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Topbar Start -->
-    <?php include 'Layouts/header.php'; ?>
-    <!-- Navbar End -->
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Topbar Start -->
+        <?php include 'Layouts/header.php'; ?>
+        <!-- Navbar End -->
 
-<!-- content start -->
-    <?php 
-    if (isset($_GET['pages']) && $_GET['pages'] == 'single') {
-        # code...
-        include 'pages/single.php';
-    }else if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') {
-        # code...
-        include 'pages/discovery.php';
-    }else{
-        # code...
-        include 'pages/home.php';
-    }
-    ?>
-    <!-- content end -->
+        <!-- Content Start -->
+        <div class="content">
+            <?php 
+            if (isset($_GET['pages']) && $_GET['pages'] == 'single') {
+                include 'pages/single.php';
+            } else if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') {
+                include 'pages/discovery.php';
+            } else {
+                include 'pages/home.php';
+            }
+            ?>
+        </div>
+        <!-- Content End -->
 
-
-    <!-- Footer Start -->
-    <?php include 'Layouts/footer.php'; ?>
-    <!-- Footer End -->
-
+        <!-- Footer Start -->
+        <div class="footer">
+            <p class="m-0 text-center">&copy; <a href="#">KELANEWS</a>. All Rights Reserved.
+                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https:///credit-removal". Thank you for your support. ***/-->
+                Design by <a href="https://">Kelompok 4</a>
+            </p>
+        </div>
+        <!-- Footer End -->
+    </div>
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary btn-square back-to-top"><i class="fa fa-arrow-up"></i></a>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
