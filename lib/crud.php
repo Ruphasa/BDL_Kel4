@@ -108,5 +108,9 @@ if (!empty($keyword)) {
     $allData = getNewsByCategory($db, $selectedCategory);
 }
 
-
+function getNewestData($db) {
+    $collection = $db->News;
+    $newestData = $collection->find()->sort(['Dibuat' => -1])->toArray();
+    return $newestData;
+}
 ?>
