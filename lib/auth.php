@@ -1,33 +1,35 @@
 <?php
 require '../vendor/autoload.php'; // Memuat library MongoDB
+require 'connection.php';
 
-// Koneksi ke MongoDB
-$client = new MongoDB\Client("mongodb://localhost:27017");
-$database = $client->kampus; // Nama database
-$collection = $database->users; // Nama koleksi
+// Mulai sesi
+session_start();
 
 // Ambil data dari form login
-$user = $_POST['username'];
-$pass = $_POST['password'];
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-// Cari user di database
-$filter = ['username' => $user, 'password' => $pass]; // Catatan: Harus menggunakan hashing untuk password
-$userData = $collection->findOne($filter);
+if (empty($username) || empty($password)) {
+    echo "<script>alert('Username atau password tidak boleh kosong!'); window.location.href='index.php';</script>";
+    exit;
+}
 
-if ($userData) {
-    session_start();
-    $_SESSION['username'] = $userData['username'];
-    $_SESSION['role'] = $userData['role'];
+ // Mencari pengguna berdasarkan username
+ $user = $collectionUser->findOne(['username' => $username]);
 
-    if ($userData['role'] === 'admin') {
-        // Jika admin
-        header("Location: adminIndex.php");
-    } else {
-        // Jika user biasa
-        header("Location: userIndex.php");
-    }
-} else {
-    // Jika login gagal
-    echo "<script>alert('Invalid username or password!'); window.location.href='index.php';</script>";
+ if ($user) {
+     // Validasi password (gunakan hashing jika password disimpan dengan hash)
+     if ($user['password'] == $password) {
+         $_SESSION['user'] = $user;
+         echo "Login berhasil!";
+         // Redirect ke halaman utama atau halaman yang sesuai
+         header('Location: ../adminIndex.php');
+     } else {
+         echo "Password salah!";
+     }
+ } else {
+     echo "Pengguna tidak ditemukan!";
+ }
 }
 ?>

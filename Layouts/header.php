@@ -64,23 +64,39 @@
 </div>
 
 <!-- Login Modal Start -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Login</h5> <button type="button" class="close"
-                    data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                <h5 class="modal-title" id="loginModalLabel">Login</h5> 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+                    <span aria-hidden="true">&times;</span> 
+                </button>
             </div>
             <div class="modal-body">
-                <form action="lib/auth.php">
-                    <div class="form-group"> <label for="username">Username</label> <input type="text"
-                            class="form-control" id="username" placeholder="Enter username"> </div>
-                    <div class="form-group"> <label for="password">Password</label> <input type="password"
-                            class="form-control" id="password" placeholder="Password"> </div> <button type="submit"
-                        class="btn btn-primary">Login</button>
+                <form id="loginForm" action="lib/auth.php" method="POST">
+                    <div class="form-group"> 
+                        <label for="username">Username</label> 
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required> 
+                    </div>
+                    <div class="form-group"> 
+                        <label for="password">Password</label> 
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required> 
+                    </div> 
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </form>
             </div>
         </div>
     </div>
-</div> <!-- Login Modal End -->
+</div> 
+<!-- Login Modal End -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Fungsi untuk menampilkan modal login
+    $(document).ready(function(){
+        $('#loginModal').modal('show');
+    });
+</script>
