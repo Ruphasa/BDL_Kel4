@@ -4,7 +4,7 @@
             <nav class="navbar navbar-expand-sm bg-dark p-0">
                 <ul class="navbar-nav ml-n2">
                     <li class="nav-item border-right border-secondary">
-                        <a class="nav-link text-body small" href="#"><?php echo date('l, d F Y');?> </a>
+                        <a class="nav-link text-body small" href="#"><?php echo date('l, d F Y'); ?> </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-body small" href="#" data-toggle="modal"
@@ -51,14 +51,14 @@
                     <a href="index.php?pages=discovery" class="nav-item nav-link">Discovery</a>
                 <?php } ?>
             </div>
-            <?php if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') {?>
+            <?php if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') { ?>
                 <form method="GET" class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 300px;">
                     <input type="hidden" name="pages" value="<?= isset($_GET['pages']) ? $_GET['pages'] : 'home'; ?>">
                     <input type="text" class="form-control border-0" name="keyword" placeholder="Keyword">
                     <div class="input-group-append"> <button class="input-group-text bg-primary text-dark border-0 px-3"><i
-                    class="fa fa-search"></i></button> </div>
+                                class="fa fa-search"></i></button> </div>
                 </form>
-                <?php }?>
+            <?php } ?>
         </div>
     </nav>
 </div>
@@ -73,12 +73,12 @@
                     data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             </div>
             <div class="modal-body">
-                <form action="adminIndex.php">
+                <form action="index.php?pages=Admin">
                     <div class="form-group"> <label for="username">Username</label> <input type="text"
                             class="form-control" id="username" placeholder="Enter username"> </div>
                     <div class="form-group"> <label for="password">Password</label> <input type="password"
-                            class="form-control" id="password" placeholder="Password"> </div> <button type="submit"
-                        class="btn btn-primary">Login</button>
+                            class="form-control" id="password" placeholder="Password"> </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </form>
             </div>
         </div>
