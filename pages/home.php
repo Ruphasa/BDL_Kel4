@@ -1,3 +1,4 @@
+<?php include 'lib/crud.php'; ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-7 px-0">
