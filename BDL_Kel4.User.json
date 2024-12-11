@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "6758614eeae29b8a1df10893"
+  },
+  "username": "admin",
+  "password": "admin"
+},
+{
+  "_id": {
+    "$oid": "67586279eae29b8a1df10894"
+  },
+  "username": "rizqi",
+  "password": "rizqi2005"
+},
+{
+  "_id": {
+    "$oid": "675862c2eae29b8a1df10895"
+  },
+  "username": "zilan",
+  "password": "zalilan"
+}]
