@@ -73,7 +73,7 @@
                     data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             </div>
             <div class="modal-body">
-                <form action="adminIndex.php">
+                <form action="lib/auth.php">
                     <div class="form-group"> <label for="username">Username</label> <input type="text"
                             class="form-control" id="username" placeholder="Enter username"> </div>
                     <div class="form-group"> <label for="password">Password</label> <input type="password"
