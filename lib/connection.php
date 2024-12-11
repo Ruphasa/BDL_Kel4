@@ -12,7 +12,7 @@ $db = $client->selectDatabase($database);
 
 // Memastikan koleksi news ada 
 $collection = $db->News;
-$collectionUser = $db->User; 
+$collectionUser = $db->User;
 if(!$collection) { 
     die("Koleksi 'news' tidak ditemukan"); 
 }

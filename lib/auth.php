@@ -16,20 +16,29 @@ if (empty($username) || empty($password)) {
 }
 
  // Mencari pengguna berdasarkan username
+ $admin = $collectionUser->findOne(['username' =>'admin']);
  $user = $collectionUser->findOne(['username' => $username]);
 
- if ($user) {
-     // Validasi password (gunakan hashing jika password disimpan dengan hash)
-     if ($user['password'] == $password) {
-         $_SESSION['user'] = $user;
-         echo "Login berhasil!";
-         // Redirect ke halaman utama atau halaman yang sesuai
-         header('Location: ../adminIndex.php');
-     } else {
-         echo "Password salah!";
-     }
- } else {
-     echo "Pengguna tidak ditemukan!";
- }
+ if ($admin) {
+    if($admin['password'] == $password){
+        $_SESSION['user'] = $admin;
+        echo "Login berhasil!";
+        // Redirect ke halaman utama atau halaman yang sesuai
+        header('Location: ../adminIndex.php');
+ } 
+ 
+ } if ($user) {
+    // Validasi password (gunakan hashing jika password disimpan dengan hash)
+    if ($user['password'] == $password) {
+        $_SESSION['user'] = $user;
+        echo "Login berhasil!";
+        // Redirect ke halaman utama atau halaman yang sesuai
+        header('Location: ../index.php');
+    } else {
+        echo "Password salah!";
+    } 
+    } else {
+    echo "Pengguna tidak ditemukan!";
+}
 }
 ?>
