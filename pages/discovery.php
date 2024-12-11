@@ -43,11 +43,7 @@
                                             <small><?php echo $data['Penulis']; ?></small>
                                         </div>
                                         <div class="d-flex align-items-center">
-<<<<<<< HEAD
                                             <span class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $data['views']; ?></span>
-=======
-                                            <small class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $data['view']; ?></small>
->>>>>>> 18a4cb5cdc394365c8a7270f2dd2c2b6a95affa4
                                             <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small>
                                         </div>
                                     </div>
