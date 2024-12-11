@@ -1,7 +1,16 @@
 <?php
 include 'lib/crud.php';
 $id = $_GET['id'];
-$data = $db->News->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
+$collection = $db->News;
+
+// Increment jumlah views
+$collection->updateOne(
+    ['_id' => new MongoDB\BSON\ObjectID($id)], // Cari berita berdasarkan ID
+    ['$inc' => ['views' => 1]] // Tambahkan nilai views sebesar 1
+);
+
+// Ambil data berita setelah increment
+$data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
 ?>
 <!-- Breaking News Start -->
 <div class="container-fluid mt-5 mb-3 pt-3">
@@ -54,7 +63,7 @@ $data = $db->News->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                             <span><?php echo $data['Penulis']; ?></span>
                         </div>
                         <div class="d-flex align-items-center">
-                            <span class="ml-3"><i class="far fa-eye mr-2"></i>12345</span>
+                            <span class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $data['views']; ?></span>
                             <span class="ml-3"><i class="far fa-comment mr-2"></i>123</span>
                         </div>
                     </div>

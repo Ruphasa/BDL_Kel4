@@ -7,20 +7,27 @@ function getAllData($db)
     // Mengambil semua data dalam bentuk array 
 }
 // Memproses form untuk create, update, delete 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['create'])) {
-        $judul = $_POST['Judul'];
-        $ringkasan = $_POST['Ringkasan'];
-        $konten = $_POST['Konten'];
-        $penulis = $_POST['Penulis'];
-        $kategori = $_POST['Kategori'];
-        // Convert the datetime-local input to MongoDB UTCDateTime 
-        $dibuat = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000);
-        $diperbarui = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000);
-        // Save to MongoDB 
-        $collection->insertOne(['Judul' => $judul, 'Ringkasan' => $ringkasan, 'Konten' => $konten, 'Penulis' => $penulis, 'Kategori' => $kategori, 'Dibuat' => $dibuat, 'Diperbarui' => $diperbarui]);
-        // Menambahkan data ke koleksi 
-    } elseif (isset($_POST['update'])) {
+if (isset($_POST['create'])) {
+    $judul = $_POST['Judul'];
+    $ringkasan = $_POST['Ringkasan'];
+    $konten = $_POST['Konten'];
+    $penulis = $_POST['Penulis'];
+    $kategori = $_POST['Kategori'];
+    $dibuat = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000);
+    $diperbarui = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000);
+    
+    // Menambahkan data ke koleksi termasuk views yang diinisialisasi dengan 0
+    $collection->insertOne([
+        'Judul' => $judul,
+        'Ringkasan' => $ringkasan,
+        'Konten' => $konten,
+        'Penulis' => $penulis,
+        'Kategori' => $kategori,
+        'Dibuat' => $dibuat,
+        'Diperbarui' => $diperbarui,
+        'Views' => 0  // Kolom Views yang diinisialisasi dengan 0
+    ]);
+} elseif (isset($_POST['update'])) {
         $id = $_POST['id'];
         $data = ['Judul' => $_POST['Judul'], 'Ringkasan' => $_POST['Ringkasan'], 'Konten' => $_POST['Konten'], 'Penulis' => $_POST['Penulis'], 'Kategori' => $_POST['Kategori'], 'Dibuat' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000), 'Diperbarui' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000),];
         try {
@@ -34,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db->News->deleteOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
         // Menghapus data dari koleksi 
     }
-}
 
 function updateData($id, $data)
 {
