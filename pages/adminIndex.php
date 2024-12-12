@@ -18,7 +18,7 @@ include "lib/crud.php"
                     <h4 class="mb-0">Data Table</h4>
                 </div>
                 <div class="card-body"> <button class="btn btn-primary mb-3" data-toggle="modal"
-                        data-target="#createModal">Add New Data</button>
+                        data-target="#form-data">Add New Data</button>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -41,7 +41,7 @@ include "lib/crud.php"
                                     <td><?php echo $data['Diperbarui']->toDateTime()->format('Y-m-d H:i:s'); ?></td>
                                     <td> <button type="button" class="btn btn-warning btn-sm"
                                             data-id="<?php $row = $data ?>" data-toggle="modal"
-                                            data-target="#updateModal">Edit</button>
+                                            data-target="#form-data">Edit</button>
                                         <form method="post" style="display:inline-block;"> <input type="hidden" name="id"
                                                 value="<?php echo $data['_id']; ?>"> <button type="submit" name="delete"
                                                 class="btn btn-danger btn-sm">Delete</button> </form>
@@ -81,12 +81,12 @@ include "lib/crud.php"
 
 <!-- Form untuk Create Data -->
 <!-- Create Modal Start -->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+<div class="modal fade" id="form-data" tabindex="-1" role="dialog" aria-labelledby="form-dataLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Add New Data</h5> <button type="button" class="close"
+                <h5 class="modal-title" id="form-dataLabel">Add New Data</h5> <button type="button" class="close"
                     data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
             </div>
             <div class="modal-body">
@@ -101,8 +101,8 @@ include "lib/crud.php"
                             class="form-control" id="Penulis" name="Penulis" required> </div>
                     <div class="form-group"> <label for="Kategori">Kategori</label> <input type="text"
                             class="form-control" id="Kategori" name="Kategori" required> </div>
-                    <div class="form-group"> <label for="img">Image</label><input type="file" class="form-control"
-                            id="img" name="img" required></div>
+                    <div class="form-group"> <label for="Gambar">Image</label><input type="file" class="form-control"
+                            id="Gambar" name="Gambar" required></div>
                     <div class="form-group"> <label for="Dibuat">Dibuat</label> <input type="datetime-local"
                             class="form-control" id="Dibuat" name="Dibuat" required> </div>
                     <div class="form-group"> <label for="Diperbarui">Diperbarui</label> <input type="datetime-local"
@@ -113,43 +113,3 @@ include "lib/crud.php"
         </div>
     </div>
 </div> <!-- Create Modal End -->
-
-
-<!-- Update Modal Start -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Update Data</h5> <button type="button" class="close"
-                    data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="updateForm"> <input type="hidden" id="updateId" name="id">
-                    <div class="form-group"> <label for="updateJudul">Judul</label> <input type="text"
-                            class="form-control" id="updateJudul" name="Judul" required><?php $row['Judul'] ?>
-                    </div>
-                    <div class="form-group"> <label for="updateRingkasan">Ringkasan</label> <input type="text"
-                            class="form-control" id="updateRingkasan" name="Ringkasan"
-                            required><?php $row['Ringkasan'] ?> </div>
-                    <div class="form-group"> <label for="updateKonten">Konten</label> <textarea class="form-control"
-                            id="updateKonten" name="Konten" required> <?php $row['Konten'] ?></textarea> </div>
-                    <div class="form-group"> <label for="updatePenulis">Penulis</label> <input type="text"
-                            class="form-control" id="updatePenulis" name="Penulis" required><?php $row['Penulis'] ?>
-                    </div>
-                    <div class="form-group"> <label for="updateKategori">Kategori</label> <input type="text"
-                            class="form-control" id="updateKategori" name="Kategori" required>
-                        <?php $row['Kategori'] ?></div>
-                    <div class="form-group"> <label for="updateDibuat">Dibuat</label> <input type="datetime-local"
-                            class="form-control" id="updateDibuat" name="Dibuat" required>
-                        <?php $row['Dibuat']->toDateTime()->format('Y-m-d H:i:s') ?>
-                    </div>
-                    <div class="form-group"> <label for="updateDiperbarui">Diperbarui</label> <input
-                            type="datetime-local" class="form-control" id="updateDiperbarui" name="Diperbarui"
-                            required><?php $row['Diperbarui']->toDateTime()->format('Y-m-d H:i:s') ?> </div>
-                    <button type="submit" name="update" class="btn btn-primary">Update Data</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> <!-- Update Modal End -->

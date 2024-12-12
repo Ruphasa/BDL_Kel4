@@ -57,7 +57,13 @@
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Topbar Start -->
-        <?php include 'Layouts/header.php'; ?>
+        <?php
+        if (isset($_GET['pages']) && $_GET['pages'] == 'admin') {
+            include 'Layouts/headerAdmin.php';
+        } else {
+            include 'Layouts/header.php';
+        }
+        ?>
         <!-- Navbar End -->
 
         <!-- Content Start -->
