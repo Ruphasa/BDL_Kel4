@@ -9,6 +9,8 @@ $collection->updateOne(
     ['$inc' => ['views' => 1]] // Tambahkan nilai views sebesar 1
 );
 
+$comments = getCommentsByNewsId($db, $id);
+
 // Ambil data berita setelah increment
 $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
 ?>
@@ -64,7 +66,7 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $data['views']; ?></span>
-                            <span class="ml-3"><i class="far fa-comment mr-2"></i>123</span>
+                            <span class="ml-3"><i class="far fa-comment mr-2"></i><?php echo count($comments); ?></span>
                         </div>
                     </div>
                 </div>
@@ -73,40 +75,19 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                 <!-- Comment List Start -->
                 <div class="position-relative mb-3">
                     <div class="section-title mb-0">
-                        <h4 class="m-0 text-uppercase font-weight-bold">3 Comments</h4>
+                        <h4 class="m-0 text-uppercase font-weight-bold"><?php echo count($comments); ?> Comments</h4>
                     </div>
                     <div class="bg-white border border-top-0 p-4">
-                        <div class="media mb-4">
-                            <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                            <div class="media-body">
-                                <h6><a class="text-secondary font-weight-bold" href="">John Doe</a> <small><i>01 Jan 2045</i></small>
-                                </h6>
-                                <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                    accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                <button class="btn btn-sm btn-outline-secondary">Reply</button>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                            <div class="media-body">
-                                <h6><a class="text-secondary font-weight-bold" href="">John Doe</a> <small><i>01 Jan 2045</i></small>
-                                </h6>
-                                <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore
-                                    accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum.</p>
-                                <button class="btn btn-sm btn-outline-secondary">Reply</button>
-                                <div class="media mt-4">
-                                    <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                    <div class="media-body">
-                                        <h6><a class="text-secondary font-weight-bold" href="">John Doe</a> <small><i>01 Jan
-                                                    2045</i></small></h6>
-                                        <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor
-                                            labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed
-                                            eirmod ipsum.</p>
-                                        <button class="btn btn-sm btn-outline-secondary">Reply</button>
-                                    </div>
+                        <?php foreach ($comments as $comment): ?>
+                            <div class="media mb-4">
+                                <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                <div class="media-body">
+                                    <h6><a class="text-secondary font-weight-bold" href="#"><?php echo $comment['id_user']; ?></a></h6>
+                                    <p><?php echo $comment['comment']; ?></p>
+                                    <button class="btn btn-sm btn-outline-secondary">Reply</button>
                                 </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
                 <!-- Comment List End -->
@@ -117,19 +98,18 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                         <h4 class="m-0 text-uppercase font-weight-bold">Leave a comment</h4>
                     </div>
                     <div class="bg-white border border-top-0 p-4">
-                        <form>
+                        <form id="commentForm" action="lib/crud.php?act=comment&newsId=<?php echo $id; ?>" method="POST">
+                            <input type="hidden" name="id_news" value="<?php echo $id; ?>">
                             <div class="form-group">
-                                <label for="message">Message *</label>
-                                <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                <label for="comment">Message *</label>
+                                <textarea id="comment" name="comment" cols="30" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="form-group mb-0">
-                                <input type="submit" value="Leave a comment" class="btn btn-primary font-weight-semi-bold py-2 px-3">
+                                <button type="submit" id="submitComment" class="btn btn-primary font-weight-semi-bold py-2 px-3">Leave a comment</button>
                             </div>
                         </form>
                     </div>
                 </div>
-                <!-- Comment Form End -->
-
             </div>
         </div>
     </div>
