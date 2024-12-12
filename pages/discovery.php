@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <span class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $data['views']; ?></span>
-                                            <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small>
+                                            <!-- <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small> -->
                                         </div>
                                     </div>
                                 </div>

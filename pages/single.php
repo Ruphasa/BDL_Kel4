@@ -66,7 +66,7 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                         </div>
                         <div class="d-flex align-items-center">
                             <span class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $data['views']; ?></span>
-                            <span class="ml-3"><i class="far fa-comment mr-2"></i>123</span>
+                            <span class="ml-3"><i class="far fa-comment mr-2"></i><?php echo count($comments); ?></span>
                         </div>
                     </div>
                 </div>
