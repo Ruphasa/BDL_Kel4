@@ -18,10 +18,15 @@ if (isset($_POST['create'])) {
     $img = $_FILES['img'];
     $file_name = str_replace(' ', '_', basename($img['name']));
     $target_file = $file_dir . basename($file_name);
+    $file_dir = '../img/';
+    $img = $_FILES['img'];
+    $file_name = str_replace(' ', '_', basename($img['name']));
+    $target_file = $file_dir . basename($file_name);
     $dibuat = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000);
     $diperbarui = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000);
     
     // Menambahkan data ke koleksi termasuk views yang diinisialisasi dengan 0
+    if(move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
     if(move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
     $collection->insertOne([
         'Judul' => $judul,
@@ -30,10 +35,12 @@ if (isset($_POST['create'])) {
         'Penulis' => $penulis,
         'Kategori' => $kategori,
         'img' => 'img/'.$file_name,
+        'img' => 'img/'.$file_name,
         'Dibuat' => $dibuat,
         'Diperbarui' => $diperbarui,
         'Views' => 0  // Kolom Views yang diinisialisasi dengan 0
     ]);
+    }
     }
 } elseif (isset($_POST['update'])) {
         $id = $_POST['id'];
@@ -108,6 +115,7 @@ function searchNewsByKeyword($db, $keyword)
 $categories = getAllCategories($db);
 $selectedCategory = isset($_GET['Kategori']) ? $_GET['Kategori'] : 'View All';
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+$breakingNews = getBreakingNews($db);
 $breakingNews = getBreakingNews($db);
 
 if (!empty($keyword)) {

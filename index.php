@@ -13,7 +13,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
@@ -25,7 +25,8 @@
     <link href="css/style.css" rel="stylesheet">
 
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
         }
@@ -61,11 +62,13 @@
 
         <!-- Content Start -->
         <div class="content">
-            <?php 
+            <?php
             if (isset($_GET['pages']) && $_GET['pages'] == 'single') {
                 include 'pages/single.php';
             } else if (isset($_GET['pages']) && $_GET['pages'] == 'discovery') {
                 include 'pages/discovery.php';
+            } else if (isset($_GET['pages']) && $_GET['pages'] == 'admin') {
+                include 'pages/adminIndex.php';
             } else {
                 include 'pages/home.php';
             }
