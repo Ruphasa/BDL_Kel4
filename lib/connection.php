@@ -12,6 +12,8 @@ $db = $client->selectDatabase($database);
 
 // Memastikan koleksi news ada 
 $collection = $db->News; 
+$comments = $db->Comment;
+$collectionUser = $db->User;
 if(!$collection) { 
     die("Koleksi 'news' tidak ditemukan"); 
 }
