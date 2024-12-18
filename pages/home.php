@@ -1,4 +1,3 @@
-<?php include_once 'lib/crud.php'; ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-7 px-0">
@@ -23,18 +22,18 @@
         </div>
         <div class="col-lg-5 px-0">
             <div class="row mx-0">
-                <?php for ($i = 3; $i < 7; $i++) { ?>
+                <?php 
+                for ($i = 3; $i < 7; $i++) { ?>
                 <div class="col-md-6 px-0">
                     <div class="position-relative overflow-hidden" style="height: 250px;">
-                        <img class="img-fluid w-100 h-100" src="img/news-700x435-1.jpg" style="object-fit: cover;">
+                        <img class="img-fluid w-100 h-100" src="<?php echo $allData[$i]['img']; ?>" style="object-fit: cover;">
                         <div class="overlay">
                             <div class="mb-2">
                                 <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                    href="">Business</a>
-                                <a class="text-white" href=""><small>Jan 01, 2045</small></a>
+                                    href="index.php?pages=discovery&Kategori=<?php echo $allData[$i]['Kategori']; ?>"><?php echo $allData[$i]['Kategori']; ?></a>
+                                <a class="text-white" href=""><small><?php echo $allData[$i]['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></small></a>
                             </div>
-                            <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="">Lorem ipsum dolor
-                                sit amet elit...</a>
+                            <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="index.php?pages=single&id=<?php echo $allData[$i]['_id']; ?>"><?php echo $allData[$i]['Judul']; ?></a>
                         </div>
                     </div>
                 </div>
@@ -83,10 +82,10 @@
                 <div class="overlay">
                     <div class="mb-2">
                         <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                            href="index.php?pages=discovery&Kategori=<?php echo $allData[$i]['Kategori']; ?>"><?php echo $allData[$i]['Kategori']; ?></a>
+                            href="index.php?pages=discovery&Kategori='<?php echo $allData[$i]['Kategori']; ?>'""><?php echo $allData[$i]['Kategori']; ?></a>
                         <a class="text-white" href=""><small><?php echo $allData[$i]['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></small></a>
                     </div>
-                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="index.php?pages=single&id=<?php echo $allData[$i]['_id']; ?>"><?php echo $allData[$i]['Judul']; ?></a>
+                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href=""><?php echo $allData[$i]['Judul']; ?></a>
                 </div>
             </div>
             <?php } ?>
@@ -107,121 +106,59 @@
                             <h4 class="m-0 text-uppercase font-weight-bold">Latest News</h4>
                         </div>
                     </div>
-                    <?php 
-                    for ($i = 0; $i < 4; $i++) { ?>
+                    <?php for ($i = 0; $i < 4; $i++) { ?>
                     <div class="col-lg-6">
                         <div class="position-relative mb-3">
-                            <img class="img-fluid w-100" src="img/news-700x435-1.jpg" style="object-fit: cover;">
+                            <img class="img-fluid w-100" src="<?php echo $latestData[$i]['img']; ?>" style="object-fit: cover;">
                             <div class="bg-white border border-top-0 p-4">
                                 <div class="mb-2">
                                     <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
-                                        href="">Business</a>
-                                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
+                                        href="index.php?pages=discovery&Kategori=<?php echo $latestData[$i]['Kategori']; ?>"><?php $latestData[$i]['Kategori']; ?></a>
+                                    <a class="text-body" href=""><small><?php $latestData[$i]['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></small></a>
                                 </div>
-                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="">Lorem
-                                    ipsum dolor sit amet elit...</a>
-                                <p class="m-0">Dolor lorem eos dolor duo et eirmod sea. Dolor sit magna
-                                    rebum clita rebum dolor stet amet justo</p>
+                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href=""><?php echo $latestData[$i]['Judul']; ?></a>
+                                <p class="m-0"><?php echo $latestData[$i]['Ringkasan']; ?></p>
                             </div>
                             <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
                                 <div class="d-flex align-items-center">
                                     <img class="rounded-circle mr-2" src="img/user.jpg" width="25" height="25" alt="">
-                                    <small>John Doe</small>
+                                    <small><?php echo $latestData[$i]['Penulis']; ?></small>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <small class="ml-3"><i class="far fa-eye mr-2"></i>12345</small>
-                                    <!-- <small class="ml-3"><i class="far fa-comment mr-2"></i>123</small> -->
+                                    <small class="ml-3"><i class="far fa-eye mr-2"></i><?php echo $latestData[$i]['views']; ?></small>
+                                    <small class="ml-3"><i class="far fa-comment mr-2"></i><?php  echo 0;?></small>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <?php } ?>
-                    <div class="col-lg-6">
-                        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                            <img class="img-fluid" src="img/news-110x110-1.jpg" alt="">
-                            <div
-                                class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                <div class="mb-2">
-                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                                        href="">Business</a>
-                                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                </div>
-                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum
-                                    dolor sit amet elit...</a>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                            <img class="img-fluid" src="img/news-110x110-2.jpg" alt="">
-                            <div
-                                class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                <div class="mb-2">
-                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                                        href="">Business</a>
-                                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                </div>
-                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum
-                                    dolor sit amet elit...</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                            <img class="img-fluid" src="img/news-110x110-3.jpg" alt="">
-                            <div
-                                class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                <div class="mb-2">
-                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                                        href="">Business</a>
-                                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                </div>
-                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum
-                                    dolor sit amet elit...</a>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                            <img class="img-fluid" src="img/news-110x110-4.jpg" alt="">
-                            <div
-                                class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
-                                <div class="mb-2">
-                                    <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                                        href="">Business</a>
-                                    <a class="text-body" href=""><small>Jan 01, 2045</small></a>
-                                </div>
-                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="">Lorem ipsum
-                                    dolor sit amet elit...</a>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-lg-12 mb-3">
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4">
-                <!-- Social Follow Start -->
-
                 <!-- Popular News Start -->
                 <div class="mb-3">
                     <div class="section-title mb-0">
                         <h4 class="m-0 text-uppercase font-weight-bold">Tranding News</h4>
                     </div>
-                        <?php
-                        for ($i = 0; $i < 6; $i++) { ?>
                     <div class="bg-white border border-top-0 p-3">
+                        <?php for ($i = 0; $i < 6; $i++) { ?>
                         <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
-                            <img style="width: 100px;" class="img-fluid" src="<?php echo $trandingData[$i]['img']; ?>" alt="">
+                            <img class="img-fluid" style="height: 110px; width: 110px;" src=<?php echo $trandingData[$i]['img']; ?> alt="">
                             <div
                                 class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
                                 <div class="mb-2">
                                     <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2"
-                                        href="index.php?pages=discovery&Kategori=<?php echo $trandingData[$i]['Kategori']; ?>"><?php echo $trandingData[$i]['Kategori']; ?></a>
-                                    <a class="text-body" href=""><small><?php echo $trandingData[$i]['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></small></a>
+                                        href="index.php?pages=discovery&Kategori=<?php echo $trandingData[$i]['Kategori'];?>"><?php echo $trandingData[$i]['Kategori']; ?></a>
+                                    <a class="text-body" href=""><small><?php echo $trandingData[$i]['Dibuat']->toDateTime()->format('Y-m-d'); ?></small></a>
                                 </div>
-                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="index.php?pages=single&id=<?php echo $trandingData[$i]['_id']; ?>"><?php echo $trandingData[$i]['Judul']; ?></a>
+                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href=""><?php if(strlen($trandingData[$i]['Judul']) > 50) echo substr($trandingData[$i]['Judul'], 0, 50) . '...'; else echo $trandingData[$i]['Judul']; ?></a>
                             </div>
                         </div>
+                        <?php } ?>
                     </div>
-                    <?php } ?>
                 </div>
                 <!-- Popular News End -->
             </div>

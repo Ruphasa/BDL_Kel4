@@ -1,5 +1,4 @@
 <?php
-include 'lib/crud.php';
 $id = $_GET['id'];
 $collection = $db->News;
 
@@ -25,12 +24,10 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                     </div>
                     <div class="owl-carousel tranding-carousel position-relative d-inline-flex align-items-center bg-white border border-left-0"
                         style="width: calc(100% - 180px); padding-right: 100px;">
-                        <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold"
-                                href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed
-                                faucibus nisl sodales</a></div>
-                        <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold"
-                                href="">Lorem ipsum dolor sit amet elit. Proin interdum lacus eget ante tincidunt, sed
-                                faucibus nisl sodales</a></div>
+                        <?php for ($i = 0; $i < 2; $i++) { ?>
+                            <div class="text-truncate"><a class="text-secondary text-uppercase font-weight-semi-bold"
+                                    href=""><?php echo $trandingData[$i]['Judul']; ?></a></div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -47,7 +44,7 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
             <div class="col-lg-12">
                 <!-- News Detail Start -->
                 <div class="position-relative mb-3">
-                    <img class="img-fluid w-100" src="img/news-700x435-1.jpg" style="object-fit: cover;">
+                    <img class="img-fluid w-100" src="<?php echo $data['img']; ?>" style="object-fit: cover;">
                     <div class="bg-white border border-top-0 p-4">
                         <div class="mb-3">
                             <a class="badge badge-primary text-uppercase font-weight-semi-bold p-2 mr-2"
@@ -82,9 +79,9 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                             <div class="media mb-4">
                                 <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                                 <div class="media-body">
-                                    <h6><a class="text-secondary font-weight-bold" href="#"><?php echo $comment['id_user']; ?></a></h6>
+                                    <h6><a class="text-secondary font-weight-bold"
+                                            href="#"><?php echo $comment['name']; ?></a></h6>
                                     <p><?php echo $comment['comment']; ?></p>
-                                    <button class="btn btn-sm btn-outline-secondary">Reply</button>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -97,17 +94,16 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                     <div class="section-title mb-0">
                         <h4 class="m-0 text-uppercase font-weight-bold">Leave a comment</h4>
                     </div>
-                    <div class="bg-white border border-top-0 p-4">
-                        <form id="commentForm" action="lib/crud.php?act=comment&newsId=<?php echo $id; ?>" method="POST">
-                            <input type="hidden" name="id_news" value="<?php echo $id; ?>">
-                            <div class="form-group">
-                                <label for="comment">Message *</label>
-                                <textarea id="comment" name="comment" cols="30" rows="5" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group mb-0">
-                                <button type="submit" id="submitComment" class="btn btn-primary font-weight-semi-bold py-2 px-3">Leave a comment</button>
-                            </div>
-                        </form>
+                    <div class="bg-white border border-top-0 p-4"> <?php if (isset($_SESSION['username'])): ?>
+                            <form id="commentForm" action="action/crud.php?act=comment&newsId=<?php echo $id; ?>"
+                                method="POST"> <input type="hidden" name="id_news" value="<?php echo $id; ?>">
+                                <div class="form-group"> <label for="comment">Message *</label> <textarea id="comment"
+                                        name="comment" cols="30" rows="5" class="form-control"></textarea> </div>
+                                <div class="form-group mb-0"> <button type="submit" id="submitComment"
+                                        class="btn btn-primary font-weight-semi-bold py-2 px-3">Leave a comment</button>
+                                </div>
+                            </form> <?php else: ?>
+                            <p>You need to <a href="" data-toggle="modal" data-target="#loginModal">login</a> first before leaving a comment.</p> <?php endif; ?>
                     </div>
                 </div>
             </div>

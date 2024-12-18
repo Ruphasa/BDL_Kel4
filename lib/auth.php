@@ -1,10 +1,12 @@
 <?php
 require '../vendor/autoload.php'; // Memuat library MongoDB
-require 'connection.php';
+require '../lib/connection.php';
 require_once 'session.php';
 
 // Mulai sesi
+$collectionUser = $db->User;
 $session = new Session();
+
 
 // Ambil data dari form login
 if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -17,10 +19,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     }
 
     // Mencari pengguna berdasarkan username
-    $admin = $collectionUser->findOne(['username' => 'admin']);
     $user = $collectionUser->findOne(['username' => $username]);
 
-    if ($admin&&$admin['password'] == $password) {
+    if ($username=="admin"&&$user['password'] == $password) {
             $session->set('is_login', true);
             $session->set('username', $username);
             $session->commit();
@@ -32,9 +33,8 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 $session->set('is_login', true);
                 $session->set('username', $username);
                 $session->commit();
-                echo "Login berhasil!";
                 // Redirect ke halaman utama atau halaman yang sesuai
-                header('Location: ../index.php');
+                echo "<script>alert('Login berhasil!'); window.location.href='../index.php';</script>";
     } else {
         echo "Pengguna tidak ditemukan!";
     }

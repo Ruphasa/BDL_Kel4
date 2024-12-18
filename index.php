@@ -1,3 +1,10 @@
+<?php 
+include 'action/crud.php';
+if(isset($_SESSION['is_login'])&&$_SESSION['is_login']==true){
+    
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

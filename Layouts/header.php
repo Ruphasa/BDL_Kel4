@@ -11,11 +11,12 @@
                             <a class="nav-link text-body small" href="#" data-toggle="modal"
                                 data-target="#loginModal">Logout</a>
                         </li>
-                    <?php } ?>
+                    <?php } else { ?>
                     <li class="nav-item">
                         <a class="nav-link text-body small" href="#" data-toggle="modal"
                             data-target="#loginModal">Login</a>
                     </li>
+                    <?php } ?>
                 </ul>
             </nav>
         </div>
@@ -46,7 +47,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
             <div class="navbar-nav mr-auto py-0">
-                <?php if (isset($_GET['pages']) && $_GET['pages'] == 'home') { ?>
+                <?php if (isset($_GET['pages']) && $_GET['pages'] == 'home'|| !isset($_GET['pages'])) { ?>
                     <a href="index.php?pages=home" class="nav-item nav-link active">Home</a>
                 <?php } else { ?>
                     <a href="index.php?pages=home" class="nav-item nav-link">Home</a>
@@ -103,10 +104,3 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // Fungsi untuk menampilkan modal login
-    $(document).ready(function () {
-        $('#loginModal').modal('show');
-    });
-</script>

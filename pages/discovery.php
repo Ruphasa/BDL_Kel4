@@ -1,4 +1,3 @@
-<?php include 'lib/crud.php'; ?>
 <!-- News With Sidebar Start -->
 <div class="container-fluid mt-5">
     <div class="container">

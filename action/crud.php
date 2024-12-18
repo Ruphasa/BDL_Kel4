@@ -1,4 +1,10 @@
-<?php include 'lib/connection.php';
+<?php
+include_once __DIR__ . ('/../lib/connection.php');
+
+$collection = $db->News; 
+$comments = $db->Comment;
+
+$act = isset($_GET['act']) ? $_GET['act'] : '';
 function getAllData($db)
 {
     $collection = $db->News;
@@ -8,7 +14,7 @@ function getAllData($db)
 }
 
 // Memproses form untuk create, update, delete 
-if (isset($_POST['create'])) {
+if ($act == 'create') {
     $judul = $_POST['Judul'];
     $ringkasan = $_POST['Ringkasan'];
     $konten = $_POST['Konten'];
@@ -24,40 +30,41 @@ if (isset($_POST['create'])) {
     $target_file = $file_dir . basename($file_name);
     $dibuat = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000);
     $diperbarui = new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000);
-    
+
     // Menambahkan data ke koleksi termasuk views yang diinisialisasi dengan 0
-    if(move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-    if(move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
-    $collection->insertOne([
-        'Judul' => $judul,
-        'Ringkasan' => $ringkasan,
-        'Konten' => $konten,
-        'Penulis' => $penulis,
-        'Kategori' => $kategori,
-        'img' => 'img/'.$file_name,
-        'img' => 'img/'.$file_name,
-        'Dibuat' => $dibuat,
-        'Diperbarui' => $diperbarui,
-        'Views' => 0  // Kolom Views yang diinisialisasi dengan 0
-    ]);
-    }
+    if (move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
+        $collection->insertOne([
+            'Judul' => $judul,
+            'Ringkasan' => $ringkasan,
+            'Konten' => $konten,
+            'Penulis' => $penulis,
+            'Kategori' => $kategori,
+            'img' => 'img/' . $file_name,
+            'img' => 'img/' . $file_name,
+            'Dibuat' => $dibuat,
+            'Diperbarui' => $diperbarui,
+            'views' => 0  // Kolom Views yang diinisialisasi dengan 0
+        ]);
+        echo "Data berhasil disimpan";
+
+        header('Location: ../index.php?pages=admin');
     }
 } elseif (isset($_POST['update'])) {
-        $id = $_POST['id'];
-        $data = ['Judul' => $_POST['Judul'], 'Ringkasan' => $_POST['Ringkasan'], 'Konten' => $_POST['Konten'], 'Penulis' => $_POST['Penulis'], 'Kategori' => $_POST['Kategori'], 'Dibuat' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000), 'Diperbarui' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000),];
-        try {
-            updateData($id, $data);
-        } catch (Exception $e) {
-            error_log("Update failed: " . $e->getMessage());
-        }
-        // Mengupdate data di koleksi 
-    } elseif (isset($_POST['delete'])) {
-        $id = $_POST['id'];
-        $db->News->deleteOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
-        // Menghapus data dari koleksi 
-    } elseif (isset($_POST['act'])&&$_POST['act']=='comment') {
-        addComment($db);
+    $id = $_POST['id'];
+    $data = ['Judul' => $_POST['Judul'], 'Ringkasan' => $_POST['Ringkasan'], 'Konten' => $_POST['Konten'], 'Penulis' => $_POST['Penulis'], 'Kategori' => $_POST['Kategori'], 'Dibuat' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000), 'Diperbarui' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000),];
+    try {
+        updateData($id, $data);
+    } catch (Exception $e) {
+        error_log("Update failed: " . $e->getMessage());
     }
+    // Mengupdate data di koleksi 
+} elseif (isset($_POST['delete'])) {
+    $id = $_POST['id'];
+    $db->News->deleteOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
+    // Menghapus data dari koleksi 
+} elseif (isset($_POST['act']) && $_POST['act'] == 'comment') {
+    addComment($db, $_POST['id_news'], $_POST['username'], $_POST['comment']);
+}
 
 function updateData($id, $data)
 {
@@ -97,7 +104,7 @@ function getNewsByCategory($db, $category)
 
 function searchNewsByKeyword($db, $keyword)
 {
-    $collection = $db->news;
+    $collection = $db->News;
     $regex = new MongoDB\BSON\Regex($keyword, 'i');
     // Pencarian case-insensitive 
     $query = [
@@ -117,7 +124,8 @@ $categories = getAllCategories($db);
 $selectedCategory = isset($_GET['Kategori']) ? $_GET['Kategori'] : 'View All';
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 $breakingNews = getBreakingNews($db);
-$breakingNews = getBreakingNews($db);
+$trandingData = getTrandingData($db);
+$latestData = getLatestData($db);
 
 if (!empty($keyword)) {
     // Pencarian berdasarkan keyword 
@@ -135,27 +143,22 @@ if (!empty($keyword)) {
 //     return $newestData;
 // }
 
-function getBreakingNews($db)
-{
-    $collection = $db->News;
-    $breakingNews = $collection->find(['Kategori' => 'Breaking News'])->toArray();
-    return $breakingNews;
-}
-
 // Fetch comments by news ID
-function getCommentsByNewsId($db, $newsId) {
+function getCommentsByNewsId($db, $newsId)
+{
     $collection = $db->Comments;
     return $collection->find(['id_news' => $newsId])->toArray();
 }
 
 // Add a new comment
-function addComment($db) {
-    $userId = $_SESSION['username'];
+function addComment($db, $newsId, $userId, $comment)
+{
+    $username = $_SESSION['username'];
     $newsId = $_GET['newsId'];
     $comment = $_POST['comment'];
     $collection = $db->Comments;
     $result = $collection->insertOne([
-        'id_user' => $userId,
+        'name' => $username,
         'id_news' => $newsId,
         'comment' => $comment,
         'created_at' => new MongoDB\BSON\UTCDateTime()
@@ -163,29 +166,47 @@ function addComment($db) {
     return $result->getInsertedId();
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (isset($_POST['act']) && $_POST['act'] == 'comment') {
+    include_once('../lib/connection.php');
     $newsId = $_POST['id_news'];
-    $userId = $_POST['id_user'];
+    $username = $_POST['username'];
     $comment = $_POST['comment'];
 
     try {
-        $commentId = addComment($db, $newsId, $userId, $comment);
-        $response = [
-            'success' => true,
-            'comment' => [
-                'id_user' => $userId,
-                'comment' => $comment,
-                'created_at' => date('Y-m-d H:i:s') // You can format the date as needed
-            ]
-        ];
+        $commentId = addComment($db, $newsId, $username, $comment);
+
+        header('Location: ' . $_SERVER['PHP_SELF'] . '?id=' . $newsId);
     } catch (Exception $e) {
         $response = [
             'success' => false,
             'message' => $e->getMessage()
         ];
     }
-    header('Content-Type: application/json');
-    echo json_encode($response);
+
     exit();
+}
+
+
+function getBreakingNews($db)
+{
+    $collection = $db->News;
+    $breakingNews = $collection->find(['Kategori' => 'Breaking News'])->toArray();
+    return $breakingNews;
+}
+
+function getTrandingData($db)
+{
+    $collection = $db->News;
+    $sort = ['sort' => ['views' => -1]];
+    $trandingData = $collection->find([], $sort)->toArray();
+    return $trandingData;
+}
+
+function getLatestData($db)
+{
+    $collection = $db->News;
+    $sort = ['sort' => ['Dibuat' => -1]];
+    $trandingData = $collection->find([], $sort)->toArray();
+    return $trandingData;
 }
 ?>
