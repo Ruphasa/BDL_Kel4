@@ -1,7 +1,7 @@
 <?php
 include_once __DIR__ . ('/../lib/connection.php');
 
-$collection = $db->News; 
+$collection = $db->News;
 $comments = $db->Comment;
 
 $act = isset($_GET['act']) ? $_GET['act'] : '';
@@ -40,7 +40,6 @@ if ($act == 'create') {
             'Penulis' => $penulis,
             'Kategori' => $kategori,
             'img' => 'img/' . $file_name,
-            'img' => 'img/' . $file_name,
             'Dibuat' => $dibuat,
             'Diperbarui' => $diperbarui,
             'views' => 0  // Kolom Views yang diinisialisasi dengan 0
@@ -49,15 +48,23 @@ if ($act == 'create') {
 
         header('Location: ../index.php?pages=admin');
     }
-} elseif (isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $data = ['Judul' => $_POST['Judul'], 'Ringkasan' => $_POST['Ringkasan'], 'Konten' => $_POST['Konten'], 'Penulis' => $_POST['Penulis'], 'Kategori' => $_POST['Kategori'], 'Dibuat' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000), 'Diperbarui' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000),];
+} elseif ($act == 'update') {
+    $id = $_GET['id'];
+    $data = [
+        'Judul' => $_POST['Judul'],
+        'Ringkasan' => $_POST['Ringkasan'],
+        'Konten' => $_POST['Konten'],
+        'Penulis' => $_POST['Penulis'],
+        'Kategori' => $_POST['Kategori'],
+        'Dibuat' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Dibuat']) * 1000),
+        'Diperbarui' => new MongoDB\BSON\UTCDateTime(strtotime($_POST['Diperbarui']) * 1000),
+    ];
     try {
         updateData($id, $data);
+        header('Location: ../index.php?pages=admin');
     } catch (Exception $e) {
         error_log("Update failed: " . $e->getMessage());
     }
-    // Mengupdate data di koleksi 
 } elseif (isset($_POST['delete'])) {
     $id = $_POST['id'];
     $db->News->deleteOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
@@ -70,7 +77,7 @@ function updateData($id, $data)
 {
     global $collection;
     try {
-        if (empty($id) || !MongoDB\BSON\ObjectId::isValid($id)) {
+        if (empty($id) || !preg_match('/^[a-f\d]{24}$/i', $id)) {
             throw new Exception("Invalid ObjectId: " . $id);
         }
         $objectId = new MongoDB\BSON\ObjectId($id);
