@@ -94,7 +94,7 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                     <div class="section-title mb-0">
                         <h4 class="m-0 text-uppercase font-weight-bold">Leave a comment</h4>
                     </div>
-                    <div class="bg-white border border-top-0 p-4"> <?php if (isset($_SESSION['username'])): ?>
+                    <div class="bg-white border border-top-0 p-4">
                             <form id="commentForm" action="action/crud.php?act=comment&newsId=<?php echo $id; ?>"
                                 method="POST"> <input type="hidden" name="id_news" value="<?php echo $id; ?>">
                                 <div class="form-group"> <label for="comment">Message *</label> <textarea id="comment"
@@ -102,8 +102,7 @@ $data = $collection->findOne(['_id' => new MongoDB\BSON\ObjectID($id)]);
                                 <div class="form-group mb-0"> <button type="submit" id="submitComment"
                                         class="btn btn-primary font-weight-semi-bold py-2 px-3">Leave a comment</button>
                                 </div>
-                            </form> <?php else: ?>
-                            <p>You need to <a href="" data-toggle="modal" data-target="#loginModal">login</a> first before leaving a comment.</p> <?php endif; ?>
+                            </form>
                     </div>
                 </div>
             </div>

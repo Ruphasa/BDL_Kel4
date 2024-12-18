@@ -160,7 +160,7 @@ function getCommentsByNewsId($db, $newsId)
 // Add a new comment
 function addComment($db, $newsId, $userId, $comment)
 {
-    $username = $_SESSION['username'];
+    $username = "anonymous";
     $newsId = $_GET['newsId'];
     $comment = $_POST['comment'];
     $collection = $db->Comments;
@@ -173,7 +173,7 @@ function addComment($db, $newsId, $userId, $comment)
     return $result->getInsertedId();
 }
 
-if (isset($_POST['act']) && $_POST['act'] == 'comment') {
+if ($act=='comment') {
     include_once('../lib/connection.php');
     $newsId = $_POST['id_news'];
     $username = $_POST['username'];
@@ -182,7 +182,7 @@ if (isset($_POST['act']) && $_POST['act'] == 'comment') {
     try {
         $commentId = addComment($db, $newsId, $username, $comment);
 
-        header('Location: ' . $_SERVER['PHP_SELF'] . '?id=' . $newsId);
+        header('Location: ../index.php?pages=single&id=' . $newsId);
     } catch (Exception $e) {
         $response = [
             'success' => false,
