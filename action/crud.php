@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . ('/../lib/connection.php');
+include_once __DIR__ . ('/../lib/auth.php');
 
 $collection = $db->News;
 $comments = $db->Comment;
@@ -158,11 +159,8 @@ function getCommentsByNewsId($db, $newsId)
 }
 
 // Add a new comment
-function addComment($db, $newsId, $userId, $comment)
+function addComment($db, $newsId, $username, $comment)
 {
-    $username = "anonymous";
-    $newsId = $_GET['newsId'];
-    $comment = $_POST['comment'];
     $collection = $db->Comments;
     $result = $collection->insertOne([
         'name' => $username,
@@ -176,7 +174,7 @@ function addComment($db, $newsId, $userId, $comment)
 if ($act=='comment') {
     include_once('../lib/connection.php');
     $newsId = $_POST['id_news'];
-    $username = $_POST['username'];
+    $username = $session->get('username');
     $comment = $_POST['comment'];
 
     try {

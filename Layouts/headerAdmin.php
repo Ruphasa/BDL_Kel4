@@ -7,7 +7,7 @@
                         <a class="nav-link text-body small" href="#"><?php echo date('l, d F Y');?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-body small" href="index.php">Logout</a>
+                        <a class="nav-link text-body small" href="lib/auth.php?act=logout">Logout</a>
                     </li>
                 </ul>
             </nav>

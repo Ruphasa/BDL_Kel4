@@ -6,10 +6,9 @@
                     <li class="nav-item border-right border-secondary">
                         <a class="nav-link text-body small" href="#"><?php echo date('l, d F Y'); ?> </a>
                     </li>
-                    <?php if (isset($_SESSION['username'])) { ?>
+                    <?php if (($session->get('username'))!=null) { ?>
                         <li class="nav-item">
-                            <a class="nav-link text-body small" href="#" data-toggle="modal"
-                                data-target="#loginModal">Logout</a>
+                            <a class="nav-link text-body small" href="lib/auth.php?act=logout">Logout</a>
                         </li>
                     <?php } else { ?>
                     <li class="nav-item">
