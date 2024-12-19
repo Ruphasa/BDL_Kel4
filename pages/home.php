@@ -85,7 +85,7 @@
                             href="index.php?pages=discovery&Kategori='<?php echo $allData[$i]['Kategori']; ?>'""><?php echo $allData[$i]['Kategori']; ?></a>
                         <a class="text-white" href=""><small><?php echo $allData[$i]['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></small></a>
                     </div>
-                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href=""><?php echo $allData[$i]['Judul']; ?></a>
+                    <a class="h6 m-0 text-white text-uppercase font-weight-semi-bold" href="index.php?pages=single&id=<?php echo $allData[$i]['_id']; ?>"><?php echo $allData[$i]['Judul']; ?></a>
                 </div>
             </div>
             <?php } ?>
@@ -116,7 +116,7 @@
                                         href="index.php?pages=discovery&Kategori=<?php echo $latestData[$i]['Kategori']; ?>"><?php $latestData[$i]['Kategori']; ?></a>
                                     <a class="text-body" href=""><small><?php $latestData[$i]['Dibuat']->toDateTime()->format('Y-m-d H:i:s'); ?></small></a>
                                 </div>
-                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href=""><?php echo $latestData[$i]['Judul']; ?></a>
+                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold" href="index.php?pages=single&id=<?php echo $latestData[$i]['_id']; ?>"><?php echo $latestData[$i]['Judul']; ?></a>
                                 <p class="m-0"><?php echo $latestData[$i]['Ringkasan']; ?></p>
                             </div>
                             <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
@@ -154,7 +154,7 @@
                                         href="index.php?pages=discovery&Kategori=<?php echo $trandingData[$i]['Kategori'];?>"><?php echo $trandingData[$i]['Kategori']; ?></a>
                                     <a class="text-body" href=""><small><?php echo $trandingData[$i]['Dibuat']->toDateTime()->format('Y-m-d'); ?></small></a>
                                 </div>
-                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href=""><?php if(strlen($trandingData[$i]['Judul']) > 50) echo substr($trandingData[$i]['Judul'], 0, 50) . '...'; else echo $trandingData[$i]['Judul']; ?></a>
+                                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="index.php?pages=single&id=<?php echo $latestData[$i]['_id']; ?>"><?php if(strlen($trandingData[$i]['Judul']) > 50) echo substr($trandingData[$i]['Judul'], 0, 50) . '...'; else echo $trandingData[$i]['Judul']; ?></a>
                             </div>
                         </div>
                         <?php } ?>
